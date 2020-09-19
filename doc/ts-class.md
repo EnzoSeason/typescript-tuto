@@ -47,10 +47,14 @@ class Department {
 
 ### Inheritance
 
+extend existing classes to create new ones using inheritance.
+
 ```typescript
 class ITSupport extends Departement {
-    constructor() {
+    developpers: string[];
+    constructor(employees: string[]) {
         super("IT");
+        this.developpers.push(...employees);
     }
 } 
 ```
@@ -90,7 +94,82 @@ Readonly properties must be initialized at their declaration or in the construct
 class Department {
     // ... basic init
     constructor(
-        private readonly id: number, 
-        public name:string){}
+        private readonly _id: number, 
+        private _name: string){}
 }
 ```
+
+### getter and setter
+
+```typescript
+class Department {
+    // ... basic init
+    get name(): string {
+        return this._name;
+    }
+
+    set name(newName: string) {
+        this._name = newName;
+    }
+}
+```
+
+### Static Properties
+
+They are visible on the class itself rather than on the instances.
+
+```typescript
+class Department {
+    // ... basic init
+    static showCompany() {
+        console.log("test company");
+    }
+}
+
+Department.showCompany();
+```
+
+### Abstract Classes
+
+Abstract classes are base classes from which other classes may be derived. They **may not be instantiated directly**.
+
+Unlike an interface, an abstract class **may contain implementation details** for its members.
+
+Methods within an abstract class that are marked as abstract **do not contain an implementation** and **must be implemented in derived classes**. 
+
+```typescript
+abstract class Department {
+    // ... basic init
+    abstract describe(): void
+}
+
+class ITSupport extends Departement {
+    // ... basic init
+    describe(): void {
+        console.log("Dep. IT");
+    }
+}
+```
+
+### singleton
+
+```typescript
+class ITSupport extends Departement {
+    private static instance: ITSupport;
+    static getInstance (): ITSupport {
+        if (this.instance) { // "this" refers to the class ITSupport
+            return this.instance;
+        } else {
+            this.instance = new ITSupport(["a"]);
+            return this.instance;
+        }
+    }
+    
+    // private constructor
+    private constructor(public developpers: string[]) {
+        super("IT");
+    }
+}
+```
+
+[Full example](../src/ts-class.ts)
