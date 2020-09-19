@@ -1,2 +1,9 @@
-let age:number;
-age = 6;
+class Dep {
+    constructor(public name: string) {}
+}
+
+class IT extends Dep {
+    constructor(public name: string) {
+        super(name);
+    }
+}
