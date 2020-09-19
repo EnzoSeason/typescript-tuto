@@ -1,4 +1,4 @@
-# Typescript
+# Typescript Type
 
 Types in TS are string, number, boolean, object, etc. All in lowercase. 
 
