@@ -172,4 +172,40 @@ class ITSupport extends Departement {
 }
 ```
 
+### Optional property
+
+add `?` after property name
+
+```typescript
+class A {
+    constructor(public id?: number){}
+}
+```
+
+
 [Full example](../src/ts-class.ts)
+
+
+## Interface
+
+[Full example](../src/ts-interface.ts)
+
+`private`, `public` or `protected` can not be used in Interface, but `readonly` can.
+
+### Function type
+
+We can defind a Function type by: 
+
+```typescript
+type AddFn = (a: number, b: number) => number
+```
+
+We can also use the Interface to do it: 
+
+
+```typescript
+interface AddFn {
+    (a: number, b: number) => number
+}
+```
+
