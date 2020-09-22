@@ -117,3 +117,13 @@ name = userInput; // pass
 ## never
 
 never is the return type for a function expression or an arrow function expression that always **throws an exception** or has an **Infinite loop**. 
+
+## Type assertions
+
+Type assertions are a way to tell the compiler “trust me, I know what I’m doing.” A type assertion is like a type cast in other languages, but it performs no special checking or restructuring of data. It has no runtime impact and is used purely by the compiler.
+
+```typescript
+let someValue: unknown = "this is a string";
+
+let strLength: number = (someValue as string).length;
+```
