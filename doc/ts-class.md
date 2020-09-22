@@ -188,11 +188,13 @@ class A {
 
 ## Interface
 
+DO NOT exist in JavaScript
+
 [Full example](../src/ts-interface.ts)
 
 `private`, `public` or `protected` can not be used in Interface, but `readonly` can.
 
-### Function type
+### Function type
 
 We can defind a Function type by: 
 
