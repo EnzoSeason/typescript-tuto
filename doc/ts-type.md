@@ -56,6 +56,19 @@ let a: string | number; // a is string or number
 let a: "aaa"; // The type of a is aaa. 
 ```
 
+## Intersection Type
+
+```typescript
+type a = {
+    name: string
+}
+type b = {
+    age: number
+}
+
+type c = a & b; // c has name and age
+```
+
 ## alian type
 
 ```typescript
