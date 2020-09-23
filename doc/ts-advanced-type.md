@@ -60,3 +60,9 @@ add('1', 2);
 ```
 
 ## Optional Chain
+
+`a?.b`: get `b` after checking `a` is `null` or `undefinded`
+
+## ??
+
+`const a = b ?? 'DEFAULT'`: if `b` is `null` or `undefinded`, a will be `'DEFAULT'`
