@@ -24,18 +24,62 @@ function inputValidate(config) {
     }
     return isValid;
 }
+class ProjectState {
+    constructor() {
+        this.projects = [];
+        this.listeners = [];
+    }
+    static getInstance() {
+        if (this.instance) {
+            return this.instance;
+        }
+        else {
+            this.instance = new ProjectState();
+            return this.instance;
+        }
+    }
+    addProject(title, desc, numOfPeople) {
+        const newProject = {
+            id: Math.random().toString(),
+            title: title,
+            description: desc,
+            people: numOfPeople
+        };
+        this.projects.push(newProject);
+        for (let listenerFn of this.listeners) {
+            listenerFn(this.projects.slice());
+        }
+    }
+    addListeners(fn) {
+        this.listeners.push(fn);
+    }
+}
+const projectState = ProjectState.getInstance();
 class ProjectList {
     constructor(type) {
         this.type = type;
+        this.assignedProjects = [];
         this.templateEl = document.getElementById('project-list');
         this.hostEl = document.getElementById('app');
         const importedNode = document.importNode(this.templateEl.content, true);
         this.el = importedNode.firstElementChild;
         this.el.id = `${this.type}-projects`;
-        this.showInfo();
+        projectState.addListeners((projects) => {
+            this.assignedProjects = projects;
+            this.renderProjects();
+        });
+        this.renderContent();
         this.attach();
     }
-    showInfo() {
+    renderProjects() {
+        let listEl = this.el.querySelector(`#${this.type}-projects-list`);
+        for (const project of this.assignedProjects) {
+            let item = document.createElement('li');
+            item.textContent = project.title;
+            listEl.appendChild(item);
+        }
+    }
+    renderContent() {
         const listId = `${this.type}-projects-list`;
         this.el.querySelector('ul').id = listId;
         this.el.querySelector('h2').textContent = this.type.toUpperCase() + ' PROJECTS';
@@ -73,8 +117,8 @@ class ProjectInput {
     submitHandler(event) {
         event.preventDefault();
         if (Array.isArray(this.gatherUserInput())) {
-            const res = this.gatherUserInput();
-            console.log(res);
+            const [title, desc, people] = this.gatherUserInput();
+            projectState.addProject(title, desc, people);
         }
     }
     config() {
