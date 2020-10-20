@@ -29,7 +29,7 @@ function inputValidate(config: Validatable) {
 class ProjectInput {
     templateEl: HTMLTemplateElement;
     hostEl: HTMLDivElement;
-    formEl: HTMLFormElement;
+    el: HTMLElement;
     titleInputEl: HTMLInputElement;
     descriptionInputEl: HTMLTextAreaElement;
     peopleInputEl: HTMLInputElement;
@@ -42,12 +42,12 @@ class ProjectInput {
             this.templateEl.content, true
         );
         
-        this.formEl = importedNode.firstElementChild as HTMLFormElement;
-        this.formEl.id = "user-input";
+        this.el = importedNode.firstElementChild as HTMLElement;
+        this.el.id = "user-input";
 
-        this.titleInputEl = this.formEl.querySelector("#title") as HTMLInputElement;
-        this.descriptionInputEl = this.formEl.querySelector("#description") as HTMLTextAreaElement;
-        this.peopleInputEl = this.formEl.querySelector("#people") as HTMLInputElement;
+        this.titleInputEl = this.el.querySelector("#title") as HTMLInputElement;
+        this.descriptionInputEl = this.el.querySelector("#description") as HTMLTextAreaElement;
+        this.peopleInputEl = this.el.querySelector("#people") as HTMLInputElement;
 
         this.config();
         this.attach();
@@ -79,11 +79,11 @@ class ProjectInput {
     } 
 
     private config() {
-        this.formEl.addEventListener('submit', this.submitHandler);
+        this.el.addEventListener('submit', this.submitHandler);
     }
 
     private attach() {
-        this.hostEl.insertAdjacentElement("afterbegin", this.formEl);
+        this.hostEl.insertAdjacentElement("afterbegin", this.el);
     }
 }
 

@@ -29,11 +29,11 @@ class ProjectInput {
         this.templateEl = document.getElementById('project-input');
         this.hostEl = document.getElementById('app');
         const importedNode = document.importNode(this.templateEl.content, true);
-        this.formEl = importedNode.firstElementChild;
-        this.formEl.id = "user-input";
-        this.titleInputEl = this.formEl.querySelector("#title");
-        this.descriptionInputEl = this.formEl.querySelector("#description");
-        this.peopleInputEl = this.formEl.querySelector("#people");
+        this.el = importedNode.firstElementChild;
+        this.el.id = "user-input";
+        this.titleInputEl = this.el.querySelector("#title");
+        this.descriptionInputEl = this.el.querySelector("#description");
+        this.peopleInputEl = this.el.querySelector("#people");
         this.config();
         this.attach();
     }
@@ -58,10 +58,10 @@ class ProjectInput {
         }
     }
     config() {
-        this.formEl.addEventListener('submit', this.submitHandler);
+        this.el.addEventListener('submit', this.submitHandler);
     }
     attach() {
-        this.hostEl.insertAdjacentElement("afterbegin", this.formEl);
+        this.hostEl.insertAdjacentElement("afterbegin", this.el);
     }
 }
 __decorate([
