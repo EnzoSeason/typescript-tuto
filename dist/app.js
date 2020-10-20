@@ -24,6 +24,20 @@ function inputValidate(config) {
     }
     return isValid;
 }
+var ProjectStatus;
+(function (ProjectStatus) {
+    ProjectStatus[ProjectStatus["Active"] = 0] = "Active";
+    ProjectStatus[ProjectStatus["Finished"] = 1] = "Finished";
+})(ProjectStatus || (ProjectStatus = {}));
+class Project {
+    constructor(id, title, desc, people, status) {
+        this.id = id;
+        this.title = title;
+        this.desc = desc;
+        this.people = people;
+        this.status = status;
+    }
+}
 class ProjectState {
     constructor() {
         this.projects = [];
@@ -39,12 +53,7 @@ class ProjectState {
         }
     }
     addProject(title, desc, numOfPeople) {
-        const newProject = {
-            id: Math.random().toString(),
-            title: title,
-            description: desc,
-            people: numOfPeople
-        };
+        const newProject = new Project(Math.random(), title, desc, numOfPeople, ProjectStatus.Active);
         this.projects.push(newProject);
         for (let listenerFn of this.listeners) {
             listenerFn(this.projects.slice());
