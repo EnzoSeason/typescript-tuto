@@ -17,6 +17,13 @@ function autobind(_, _2, descriptor) {
     };
     return adjDescriptor;
 }
+function inputValidate(config) {
+    let isValid = true;
+    if (config.required) {
+        isValid = isValid && String(config.value).trim().length !== 0;
+    }
+    return isValid;
+}
 class ProjectInput {
     constructor() {
         this.templateEl = document.getElementById('project-input');
@@ -30,9 +37,25 @@ class ProjectInput {
         this.config();
         this.attach();
     }
+    gatherUserInput() {
+        const title = this.titleInputEl.value;
+        const desc = this.descriptionInputEl.value;
+        const people = this.peopleInputEl.value;
+        if (!inputValidate({ value: title, required: true }) ||
+            !inputValidate({ value: desc, required: false }) ||
+            !inputValidate({ value: people, required: true })) {
+            alert('Form is not completed');
+        }
+        else {
+            return [title, desc, Number(people)];
+        }
+    }
     submitHandler(event) {
         event.preventDefault();
-        console.log(this.titleInputEl.value);
+        if (Array.isArray(this.gatherUserInput())) {
+            const res = this.gatherUserInput();
+            console.log(res);
+        }
     }
     config() {
         this.formEl.addEventListener('submit', this.submitHandler);

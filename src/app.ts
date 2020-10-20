@@ -11,6 +11,21 @@ function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
     return adjDescriptor;
 }
 
+interface Validatable {
+    value: string | number,
+    required?: boolean
+}
+
+function inputValidate(config: Validatable) {
+    let isValid = true;
+
+    if (config.required) {
+        isValid = isValid && String(config.value).trim().length !== 0;
+    }
+
+    return isValid;
+}
+
 class ProjectInput {
     templateEl: HTMLTemplateElement;
     hostEl: HTMLDivElement;
@@ -38,11 +53,29 @@ class ProjectInput {
         this.attach();
     }
 
+    private gatherUserInput(): [string, string, number] | void {
+        const title = this.titleInputEl.value;
+        const desc = this.descriptionInputEl.value;
+        const people = this.peopleInputEl.value;
+
+        if (
+            !inputValidate({value: title, required: true}) || 
+            !inputValidate({value: desc, required: false}) || 
+            !inputValidate({value: people, required: true})) {
+                alert('Form is not completed');
+        } else {
+            return [title, desc, Number(people)];
+        }
+    }
+
     @autobind
     private submitHandler(event: Event) {
         event.preventDefault();
 
-        console.log(this.titleInputEl.value);
+        if (Array.isArray(this.gatherUserInput())) {
+            const res = this.gatherUserInput();
+            console.log(res);
+        }
     } 
 
     private config() {
