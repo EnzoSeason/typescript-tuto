@@ -30,14 +30,15 @@ var ProjectStatus;
     ProjectStatus[ProjectStatus["Finished"] = 1] = "Finished";
 })(ProjectStatus || (ProjectStatus = {}));
 class Project {
-    constructor(id, title, desc, people, status) {
-        this.id = id;
+    constructor(title, desc, people, status, id = ++Project.projectId) {
         this.title = title;
         this.desc = desc;
         this.people = people;
         this.status = status;
+        this.id = id;
     }
 }
+Project.projectId = 0;
 class ProjectState {
     constructor() {
         this.projects = [];
@@ -53,7 +54,7 @@ class ProjectState {
         }
     }
     addProject(title, desc, numOfPeople) {
-        const newProject = new Project(Math.random(), title, desc, numOfPeople, ProjectStatus.Active);
+        const newProject = new Project(title, desc, numOfPeople, ProjectStatus.Active);
         this.projects.push(newProject);
         for (let listenerFn of this.listeners) {
             listenerFn(this.projects.slice());
@@ -74,15 +75,36 @@ class ProjectList {
         this.el = importedNode.firstElementChild;
         this.el.id = `${this.type}-projects`;
         projectState.addListeners((projects) => {
-            this.assignedProjects = projects;
-            this.renderProjects();
+            const listProjects = projects.filter(project => {
+                if (this.type === "active") {
+                    return project.status === ProjectStatus.Active;
+                }
+                if (this.type === "finished") {
+                    return project.status === ProjectStatus.Finished;
+                }
+                else {
+                    return false;
+                }
+            });
+            const newProjects = listProjects.filter(project => {
+                const renderedProjects = this.assignedProjects
+                    .filter(assignedProject => assignedProject.id === project.id);
+                if (renderedProjects.length) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            });
+            this.assignedProjects = this.assignedProjects.concat(newProjects);
+            this.renderProjects(newProjects);
         });
         this.renderContent();
         this.attach();
     }
-    renderProjects() {
+    renderProjects(newProjects) {
         let listEl = this.el.querySelector(`#${this.type}-projects-list`);
-        for (const project of this.assignedProjects) {
+        for (const project of newProjects) {
             let item = document.createElement('li');
             item.textContent = project.title;
             listEl.appendChild(item);
@@ -128,7 +150,13 @@ class ProjectInput {
         if (Array.isArray(this.gatherUserInput())) {
             const [title, desc, people] = this.gatherUserInput();
             projectState.addProject(title, desc, people);
+            this.clearForm();
         }
+    }
+    clearForm() {
+        this.titleInputEl.value = "";
+        this.descriptionInputEl.value = "";
+        this.peopleInputEl.value = "";
     }
     config() {
         this.el.addEventListener('submit', this.submitHandler);

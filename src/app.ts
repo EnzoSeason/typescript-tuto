@@ -31,12 +31,13 @@ function inputValidate(config: Validatable) {
 enum ProjectStatus {Active, Finished}
 
 class Project {
+    static projectId = 0;
     constructor(
-        public id: number,
         public title: string,
         public desc: string,
         public people: number,
-        public status: ProjectStatus
+        public status: ProjectStatus,
+        public id = ++Project.projectId,
     ){}
 }
 
@@ -61,7 +62,6 @@ class ProjectState {
 
     public addProject(title: string, desc: string, numOfPeople: number) {
         const newProject = new Project(
-            Math.random(),
             title,
             desc,
             numOfPeople,
@@ -100,17 +100,36 @@ class ProjectList {
         this.el.id = `${this.type}-projects`;
 
         projectState.addListeners((projects: Project[]) => {
-            this.assignedProjects = projects;
-            this.renderProjects();
+            const listProjects = projects.filter(project => {
+                if (this.type === "active") {
+                    return project.status === ProjectStatus.Active;
+                }
+                if (this.type === "finished") {
+                    return project.status === ProjectStatus.Finished;
+                } else {
+                    return false;
+                }
+            });
+            const newProjects = listProjects.filter(project => {
+                const renderedProjects = this.assignedProjects
+                    .filter(assignedProject => assignedProject.id === project.id);
+                if (renderedProjects.length) {
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+            this.assignedProjects = this.assignedProjects.concat(newProjects);
+            this.renderProjects(newProjects);
         });
         
         this.renderContent();
         this.attach();
     }
 
-    private renderProjects() {
+    private renderProjects(newProjects: Project[]) {
         let listEl = this.el.querySelector(`#${this.type}-projects-list`)! as HTMLUListElement;
-        for (const project of this.assignedProjects) {
+        for (const project of newProjects) {
             let item = document.createElement('li');
             item.textContent = project.title;
             listEl.appendChild(item);
@@ -178,8 +197,15 @@ class ProjectInput {
         if (Array.isArray(this.gatherUserInput())) {
             const [title, desc, people] = this.gatherUserInput() as [string, string, number];
             projectState.addProject(title, desc, people);
+            this.clearForm();
         }
-    } 
+    }
+    
+    private clearForm() {
+        this.titleInputEl.value = "";
+        this.descriptionInputEl.value = "";
+        this.peopleInputEl.value = "";
+    }
 
     private config() {
         this.el.addEventListener('submit', this.submitHandler);
