@@ -13,7 +13,7 @@ function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
 
 interface Validatable {
     value: string | number,
-    required?: boolean
+    required?: boolean,
 }
 
 function inputValidate(config: Validatable) {
