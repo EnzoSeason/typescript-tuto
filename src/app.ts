@@ -41,9 +41,17 @@ class Project {
     ){}
 }
 
-type ListenerFn = (projects: Project[]) => void;
+type ListenerFn<T> = (projects: T[]) => void;
 
-class ProjectState {
+class State<T> {
+    protected listeners: ListenerFn<T>[] = [];
+
+    addListeners(fn: ListenerFn<T>) {
+        this.listeners.push(fn);
+    }
+}
+
+class ProjectState extends State<Project>{
     private static instance: ProjectState;
 
     public static getInstance() {
@@ -56,9 +64,10 @@ class ProjectState {
     }
 
     private projects: Project[] = [];
-    private listeners: ListenerFn[] = []; // update projects
 
-    private constructor() {}
+    private constructor() {
+        super();
+    }
 
     public addProject(title: string, desc: string, numOfPeople: number) {
         const newProject = new Project(
@@ -71,10 +80,6 @@ class ProjectState {
         for(let listenerFn of this.listeners) {
             listenerFn(this.projects.slice());
         }
-    }
-
-    public addListeners(fn: ListenerFn) {
-        this.listeners.push(fn);
     }
 }
 

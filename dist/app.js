@@ -39,10 +39,18 @@ class Project {
     }
 }
 Project.projectId = 0;
-class ProjectState {
+class State {
     constructor() {
-        this.projects = [];
         this.listeners = [];
+    }
+    addListeners(fn) {
+        this.listeners.push(fn);
+    }
+}
+class ProjectState extends State {
+    constructor() {
+        super();
+        this.projects = [];
     }
     static getInstance() {
         if (this.instance) {
@@ -59,9 +67,6 @@ class ProjectState {
         for (let listenerFn of this.listeners) {
             listenerFn(this.projects.slice());
         }
-    }
-    addListeners(fn) {
-        this.listeners.push(fn);
     }
 }
 const projectState = ProjectState.getInstance();
