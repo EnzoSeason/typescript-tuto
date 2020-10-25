@@ -15,6 +15,8 @@
     ```
 3. `tsc --init`: init `tsconfig.json`
 
+4. `npm install --save-dev webpack webpack-cli webpack-dev-server typescript ts-loader`: for webpack
+
 ## Install
 
 1. `npm install`: install dependencies (node module)
