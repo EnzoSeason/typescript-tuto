@@ -9,7 +9,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProjectInput = void 0;
 const auto_bind_1 = require("../../decorators/auto-bind");
 const project_state_1 = require("../../states/project-state");
-class ProjectInput extends Component {
+const abstract_project_1 = require("./abstract-project");
+class ProjectInput extends abstract_project_1.Component {
     constructor() {
         super('project-input', 'app', true, "user-input");
         this.titleInputEl = this.el.querySelector("#title");
@@ -52,3 +53,4 @@ __decorate([
     auto_bind_1.autobind
 ], ProjectInput.prototype, "submitHandler", null);
 exports.ProjectInput = ProjectInput;
+//# sourceMappingURL=input.js.map

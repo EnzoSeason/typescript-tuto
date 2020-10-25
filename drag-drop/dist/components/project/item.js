@@ -8,7 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProjectItem = void 0;
 const auto_bind_1 = require("../../decorators/auto-bind");
-class ProjectItem extends Component {
+const abstract_project_1 = require("./abstract-project");
+class ProjectItem extends abstract_project_1.Component {
     constructor(hostId, project) {
         super('single-project', hostId, false, project.id.toString());
         this.project = project;
@@ -41,3 +42,4 @@ __decorate([
     auto_bind_1.autobind
 ], ProjectItem.prototype, "dragStartHandler", null);
 exports.ProjectItem = ProjectItem;
+//# sourceMappingURL=item.js.map

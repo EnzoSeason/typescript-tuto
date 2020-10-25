@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Component = void 0;
 class Component {
     constructor(templateId, hostId, insertAtStart, elId) {
         this.templateEl = document.getElementById(templateId);
@@ -19,3 +21,5 @@ class Component {
         }
     }
 }
+exports.Component = Component;
+//# sourceMappingURL=abstract-project.js.map

@@ -10,8 +10,9 @@ exports.ProjectList = void 0;
 const auto_bind_1 = require("../../decorators/auto-bind");
 const project_1 = require("../../models/project");
 const project_state_1 = require("../../states/project-state");
+const abstract_project_1 = require("./abstract-project");
 const item_1 = require("./item");
-class ProjectList extends Component {
+class ProjectList extends abstract_project_1.Component {
     constructor(type) {
         super('project-list', 'app', false, `${type}-projects`);
         this.type = type;
@@ -82,3 +83,4 @@ __decorate([
     auto_bind_1.autobind
 ], ProjectList.prototype, "dragLeaveHandler", null);
 exports.ProjectList = ProjectList;
+//# sourceMappingURL=list.js.map
