@@ -1,4 +1,4 @@
-abstract class Component<T extends HTMLElement> {
+export abstract class Component<T extends HTMLElement> {
     templateEl: HTMLTemplateElement;
     hostEl: T;
     el: HTMLElement;

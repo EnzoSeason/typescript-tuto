@@ -2,6 +2,7 @@ import { autobind } from "../../decorators/auto-bind";
 import { DragTarget } from "../../models/drag-drop";
 import { Project, ProjectStatus } from "../../models/project";
 import { projectState } from "../../states/project-state";
+import { Component } from "./abstract-project";
 import { ProjectItem } from "./item";
 
 export class ProjectList extends Component<HTMLDivElement> implements DragTarget {

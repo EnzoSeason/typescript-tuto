@@ -1,6 +1,7 @@
 import { autobind } from "../../decorators/auto-bind";
 import { Draggable } from "../../models/drag-drop";
 import { Project } from "../../models/project";
+import { Component } from "./abstract-project";
 
 export class ProjectItem extends Component<HTMLUListElement> implements Draggable {
     private project: Project;

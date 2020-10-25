@@ -1,5 +1,6 @@
 import { autobind, inputValidate } from "../../decorators/auto-bind";
 import { projectState } from "../../states/project-state";
+import { Component } from "./abstract-project";
 
 export class ProjectInput extends Component<HTMLDivElement>{
     titleInputEl: HTMLInputElement;
