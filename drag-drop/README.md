@@ -11,10 +11,12 @@
     "scripts": {
         // other config
         "start": "webpack-dev-server"
-        "build": "webpack" // insert this line
+        "build": "webpack --config webpack.config.prod.js"
     },
     ```
 3. `tsc --init`: init `tsconfig.json`
+
+4. `npm install --save-dev clean-webpack-plugin`: clean js code created on webpack dev mode
 
 ## Install
 
