@@ -1,4 +1,8 @@
-export default interface TodoItem {
-    id: string;
-    text: string;
+export default class TodoItem {
+    static todoId = 0;
+
+    constructor(
+        public text: string,
+        public id = ++TodoItem.todoId
+    ){}
 }
